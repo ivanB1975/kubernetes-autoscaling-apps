@@ -9,3 +9,5 @@ This application uses a simple flask server:
     @app.route("/")
     def hello_world():
     return "<p>Hello, World!</p>"
+
+It is dockerized using an alpine version for python
