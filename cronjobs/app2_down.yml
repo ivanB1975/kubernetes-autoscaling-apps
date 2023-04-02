@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-down-app2
+spec:
+  schedule: "0 0 * * 6" # scale down app2 at Midnight UTC each Saturday
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl:latest
+              imagePullPolicy: IfNotPresent
+              args:
+                - scale
+                - deployment
+                - app2
+                - --replicas=1
+          serviceAccountName: default

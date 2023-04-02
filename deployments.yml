@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+        version: app1
+    spec:
+      containers:
+        - name: app1
+          image: kube-challenge/flask-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "125m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          env:
+            - name: APP_NUMBER
+              value: "1"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+        version: app2
+    spec:
+      containers:
+        - name: app2
+          image: kube-challenge/flask-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "125m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          env:
+            - name: APP_NUMBER
+              value: "2"
