@@ -41,13 +41,13 @@ The pods can be exposed creating services of type NodePort:
 
     kubectl apply -f services.yml
 
-Applying the services it creates 3 different services:
+This commands creates 3 different services:
 
 * the first one points to the pods in the app1 deployment
 * the second one points to the pods in the app2 deployment
 * the third one points to both deployments
 
-At this point the services can be made accessible outside the cluster using Ingresses. Before to do that the ip where 
+At this point the services can be made accessible outside the cluster using Ingress. Before to do that the ip where 
 the services are exposed can be retrieved by:
 
     minikube ip
@@ -67,7 +67,7 @@ this will apply an ingress fanout configuration that will target 3 paths for the
     /app2 for the app2 pods
     / for both app1 and app2 pods
 
-In order to scale up and down the 2 applications, a new cluster role is created to grant permission to use the 
+In order to scale up and down the 2 applications, a new cluster role is created that grants permission to use the 
 kubernetes API to scale up and down the applications in the default namespace as default service account.
 First the new cluster role is created with this command:
 
@@ -84,3 +84,7 @@ A docker image containing the kubectl client is already available as "bitnami/ku
 different loads of the 2 applications, 4 different cronjobs are created. Tha app1 is scaled up every day at 7 a.m. UTC
 time to react to the daily load, and it is scaled down at 7 p.m. UTC time. The app2 is scaled up at midnight UTC every
 Monday and scaled down at midnight UTC every Saturday to react to the weekly load.
+
+This command is used to create the 4 cronjobs:
+
+    kubectl apply -f cronjobs/app1_up.yml cronjobs/app1_down.yml cronjobs/app2_up.yml cronjobs/app2_down.yml
