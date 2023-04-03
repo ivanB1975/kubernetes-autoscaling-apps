@@ -87,4 +87,4 @@ Monday and scaled down at midnight UTC every Saturday to react to the weekly loa
 
 This command is used to create the 4 cronjobs:
 
-    kubectl apply -f cronjobs/app1_up.yml cronjobs/app1_down.yml cronjobs/app2_up.yml cronjobs/app2_down.yml
+    kubectl apply -f cronjobs/app1_up.yml,cronjobs/app1_down.yml,cronjobs/app2_up.yml,cronjobs/app2_down.yml
