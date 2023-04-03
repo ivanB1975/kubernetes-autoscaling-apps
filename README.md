@@ -67,4 +67,20 @@ this will apply an ingress fanout configuration that will target 3 paths for the
     /app2 for the app2 pods
     / for both app1 and app2 pods
 
+In order to scale up and down the 2 applications, a new cluster role is created to grant permission to use the 
+kubernetes API to scale up and down the applications in the default namespace as default service account.
+First the new cluster role is created with this command:
 
+    kubectl apply -f cluster_role_scaler.yml
+
+After that the default service account can be granted the role by using the command:
+
+    kubectl create clusterrolebinding deployments-scaler \
+    --clusterrole=deployments-scaler  \
+    --serviceaccount=default:default
+
+Now the API can be used internally to a POD. The easiest way to do that is to use the kubectl client inside a POD.
+A docker image containing the kubectl client is already available as "bitnami/kubectl". To solve the problem of the 
+different loads of the 2 applications, 4 different cronjobs are created. Tha app1 is scaled up every day at 7 a.m. UTC
+time to react to the daily load, and it is scaled down at 7 p.m. UTC time. The app2 is scaled up at midnight UTC every
+Monday and scaled down at midnight UTC every Saturday to react to the weekly load.
