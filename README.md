@@ -1,4 +1,4 @@
-# kube-challenge
+# kubernetes-autoscaling-apps
 
 This application uses a simple flask server:
 
